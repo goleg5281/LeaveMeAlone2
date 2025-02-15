@@ -2,12 +2,19 @@
 
 
 #include "Player/LMADefaultCharacter.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 // Sets default values
 ALMADefaultCharacter::ALMADefaultCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	this->SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
+	this->SpringArmComponent->SetupAttachment(GetRootComponent());
+
+	this->CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
+	this->CameraComponent->SetupAttachment(SpringArmComponent);
 
 }
 
