@@ -35,6 +35,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
+
+
 private:
 	float YRotation = -75.0f; // отвечает за поворот камеры по оси Y
 	float ArmLength = 1400.0f; // отвечает за длину штатива.
@@ -42,4 +44,14 @@ private:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+
+public:
+	UPROPERTY()
+	UDecalComponent* CurrentCursor = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
+	UMaterialInterface* CursorMaterial = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
+	FVector CursorSize = FVector(20.0f, 40.0f, 40.0f);
 };
