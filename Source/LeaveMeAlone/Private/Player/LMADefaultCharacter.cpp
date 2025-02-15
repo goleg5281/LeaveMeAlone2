@@ -16,6 +16,14 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 	this->CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	this->CameraComponent->SetupAttachment(SpringArmComponent);
 
+	SpringArmComponent->SetUsingAbsoluteRotation(true);
+	SpringArmComponent->TargetArmLength = ArmLength;
+	SpringArmComponent->SetRelativeRotation(FRotator(YRotation, 0.0f, 0.0f));
+	SpringArmComponent->bDoCollisionTest = false;
+	SpringArmComponent->bEnableCameraLag = true;
+
+	CameraComponent->SetFieldOfView(FOV);
+	CameraComponent->bUsePawnControlRotation = false;
 }
 
 // Called when the game starts or when spawned
