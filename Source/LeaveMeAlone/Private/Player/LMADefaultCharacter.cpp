@@ -44,6 +44,17 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
+}
 
+void ALMADefaultCharacter::MoveForward(float Value)
+{
+	AddMovementInput(GetActorForwardVector(), Value);
+}
+
+void ALMADefaultCharacter::MoveRight(float Value)
+{
+	AddMovementInput(GetActorRightVector(), Value);
 }
 
