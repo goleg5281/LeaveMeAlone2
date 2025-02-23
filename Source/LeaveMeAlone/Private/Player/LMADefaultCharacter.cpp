@@ -1,6 +1,6 @@
 // LeaveMeAlone Game by Netologiya. All Rights Reserved.
 
-#include "Engine/Engine.h"
+
 #include "Player/LMADefaultCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -8,7 +8,6 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/DecalComponent.h"
 #include "Components/InputComponent.h"
-
 
 
 // Sets default values
@@ -73,8 +72,10 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
-	//PlayerInputComponent->BindAction("WheelClick", IE_Pressed, this, &ALMADefaultCharacter::Wheel);
-	PlayerInputComponent->BindAxis("Wheel", this, &ALMADefaultCharacter::Wheel);
+
+	//PlayerInputComponent->BindAction(TEXT("ZoomIn"), EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::ZoomIn);
+	//PlayerInputComponent->BindAction("ZoomOut", EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::ZoomOut);
+	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::Zoom);
 }
 
 void ALMADefaultCharacter::MoveForward(float Value)
@@ -87,15 +88,19 @@ void ALMADefaultCharacter::MoveRight(float Value)
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
-void ALMADefaultCharacter::Wheel(float Value)
+void ALMADefaultCharacter::Zoom(float Value)
 {
 	ArmLength += Value;
 	SpringArmComponent->TargetArmLength = ArmLength;
 	UE_LOG(LogTemp, Display, TEXT("ArmLength: %f"), ArmLength);
-	//if (GEngine)
-	//{
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("wheel value: %f"), static_cast<float>(ArmLength));
-		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("wheel value: %f"), ArmLength, true, 1);
-	//}
+
+}
+
+void ALMADefaultCharacter::ZoomIn(float Value)
+{
+	ArmLength += Value;
+	SpringArmComponent->TargetArmLength = ArmLength;
+	UE_LOG(LogTemp, Display, TEXT("ArmLength: %f"), ArmLength);
+
 }
 

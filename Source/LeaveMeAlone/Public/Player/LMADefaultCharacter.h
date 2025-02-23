@@ -44,7 +44,8 @@ private:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-	void Wheel(float Value);
+	void Zoom(float Value);
+	void ZoomIn(float Value);
 
 public:
 	UPROPERTY()
