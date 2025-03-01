@@ -98,6 +98,7 @@ void ALMADefaultCharacter::ZoomGamePad(float Value)
 
 void ALMADefaultCharacter::ZoomIn()
 {
+	;
 	SpringArmComponent->TargetArmLength = ArmLength -= 10;
 }
 
