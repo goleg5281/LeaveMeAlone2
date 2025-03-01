@@ -6,8 +6,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Components/DecalComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/DecalComponent.h"
+
 
 
 // Sets default values
@@ -73,9 +74,9 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
 
-	//PlayerInputComponent->BindAction(TEXT("ZoomIn"), EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::ZoomIn);
-	//PlayerInputComponent->BindAction("ZoomOut", EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::ZoomOut);
-	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::Zoom);
+	PlayerInputComponent->BindAction("ZoomIn", EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::ZoomIn);
+	PlayerInputComponent->BindAction("ZoomOut", EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::ZoomOut);
+	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::ZoomGamePad);
 }
 
 void ALMADefaultCharacter::MoveForward(float Value)
@@ -88,19 +89,20 @@ void ALMADefaultCharacter::MoveRight(float Value)
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
-void ALMADefaultCharacter::Zoom(float Value)
+void ALMADefaultCharacter::ZoomGamePad(float Value)
 {
 	ArmLength += Value;
 	SpringArmComponent->TargetArmLength = ArmLength;
-	UE_LOG(LogTemp, Display, TEXT("ArmLength: %f"), ArmLength);
-
+	//UE_LOG(LogTemp, Display, TEXT("ArmLength: %f"), ArmLength);
 }
 
-void ALMADefaultCharacter::ZoomIn(float Value)
+void ALMADefaultCharacter::ZoomIn()
 {
-	ArmLength += Value;
-	SpringArmComponent->TargetArmLength = ArmLength;
-	UE_LOG(LogTemp, Display, TEXT("ArmLength: %f"), ArmLength);
+	SpringArmComponent->TargetArmLength -= ArmLength * 10.0;
+}
 
+void ALMADefaultCharacter::ZoomOut()
+{
+	SpringArmComponent->TargetArmLength += ArmLength * 10.0;
 }
 

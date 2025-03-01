@@ -29,7 +29,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-protected:
+public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USpringArmComponent* SpringArmComponent;
 
@@ -37,15 +37,16 @@ protected:
 	UCameraComponent* CameraComponent;
 
 
-private:
+public:
 	float YRotation = -75.0f; // отвечает за поворот камеры по оси Y
 	float ArmLength = 1400.0f; // отвечает за длину штатива.
 	float FOV = 55.0f;		   // field of view
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-	void Zoom(float Value);
-	void ZoomIn(float Value);
+	void ZoomIn();
+	void ZoomOut();
+	void ZoomGamePad(float Value);
 
 public:
 	UPROPERTY()
