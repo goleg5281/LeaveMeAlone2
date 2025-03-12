@@ -37,6 +37,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	float MaxHealth = 100.0f;
 
-
+	private:
+	UFUNCTION()
+	void OnTakeAnyDamage(
+		AActor* DamagedActor, float Damage,
+		const class UDamageType* DamageType,
+		class AController* InstigatedBy, AActor* DamageCauser
+	);
 	
 };

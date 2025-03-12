@@ -68,7 +68,7 @@ protected:
 	ULMAHealthComponent* HealthComponent;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	bool SprintBool = false;
 	float Stamina = 100.0f;
 };

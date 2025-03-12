@@ -119,6 +119,4 @@ void ALMADefaultCharacter::ZoomOut()
 void ALMADefaultCharacter::Sprint()
 {
 	SprintBool = SprintBool == false ? true : false;
-	//TODO//SetDefault();
-
 }

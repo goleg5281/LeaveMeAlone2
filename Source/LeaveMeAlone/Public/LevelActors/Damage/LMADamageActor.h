@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/SphereComponent.h"
 #include "LMADamageActor.generated.h"
+
+class USphereComponent;
+class UStaticMeshComponent;
 
 UCLASS()
 class LEAVEMEALONE_API ALMADamageActor : public AActor
