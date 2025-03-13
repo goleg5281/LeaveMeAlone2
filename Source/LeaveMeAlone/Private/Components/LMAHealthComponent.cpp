@@ -30,8 +30,24 @@ void ULMAHealthComponent::BeginPlay()
 void ULMAHealthComponent::OnTakeAnyDamage(
 	AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	Health -= Damage;
+	if (IsDead())
+	{
+		return;
+	}
+
+	Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
+	// OnHealthChanged.Broadcast(Health);
+
+	 if (IsDead())
+	{
+		OnDeath.Broadcast();
+	}
 } 
+
+bool ULMAHealthComponent::IsDead() const
+{
+	return Health <= 0.0f;
+}
 
 
 // Called every frame

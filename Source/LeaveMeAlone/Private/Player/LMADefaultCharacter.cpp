@@ -9,6 +9,7 @@
 #include "Components/InputComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/LMAHealthComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 // Sets default values
@@ -48,6 +49,8 @@ void ALMADefaultCharacter::BeginPlay()
 	{
 		CurrentCursor = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), CursorMaterial, CursorSize, FVector(0));
 	}
+	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
+
 }
 
 // Called every frame
@@ -121,4 +124,17 @@ void ALMADefaultCharacter::Sprint()
 	SprintBool = SprintBool == false ? true : false;
 	//TODO//SetDefault();
 
+}
+
+void ALMADefaultCharacter::OnDeath()
+{
+	CurrentCursor->DestroyRenderState_Concurrent();
+	PlayAnimMontage(DeathMontage);
+	GetCharacterMovement()->DisableMovement();
+	SetLifeSpan(5.0f);
+
+	if (Controller)
+	{
+		Controller->ChangeState(NAME_Spectating);
+	}
 }

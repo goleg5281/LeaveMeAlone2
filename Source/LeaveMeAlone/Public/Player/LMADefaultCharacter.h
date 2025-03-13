@@ -9,6 +9,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class ULMAHealthComponent;
+class UAnimMontage;
 
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
@@ -61,14 +62,23 @@ public:
 	FVector CursorSize = FVector(20.0f, 40.0f, 40.0f);
 
 	UFUNCTION(BlueprintCallable)
-	bool IsSprint() const { return SprintBool; }
+	bool IsSprint() const 
+	{ 
+		return SprintBool; 
+	}
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
 	ULMAHealthComponent* HealthComponent;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* DeathMontage;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	bool SprintBool = false;
 	float Stamina = 100.0f;
+
+private:
+	void OnDeath();
 };

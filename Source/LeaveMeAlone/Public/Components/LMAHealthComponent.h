@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "LMAHealthComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnDeath);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LEAVEMEALONE_API ULMAHealthComponent : public UActorComponent
@@ -30,6 +31,10 @@ public:
 		return Health;
 	}
 
+	UFUNCTION(BlueprintCallable)
+	bool IsDead() const;
+
+
 private:
 	float Health = 0.0f;
 
@@ -45,4 +50,6 @@ protected:
 		class AController* InstigatedBy, AActor* DamageCauser
 	);
 	
+	public:
+	FOnDeath OnDeath;
 };
