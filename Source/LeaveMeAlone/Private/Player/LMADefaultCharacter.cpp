@@ -116,7 +116,12 @@ void ALMADefaultCharacter::ZoomGamePad(float Value)
 	SpringArmComponent->TargetArmLength = ArmLength;
 	//UE_LOG(LogTemp, Display, TEXT("ArmLength: %f"), ArmLength);
 }
+void ALMADefaultCharacter::Sprint()
+{
+	SprintBool = SprintBool == false ? true : false;
 
+	// TODO?????????????????????????????????HOW TO SET CurrentVelocity//AActor* OwnerComponent = GetOwner();
+}
 
 void ALMADefaultCharacter::ZoomIn()
 {
@@ -126,15 +131,6 @@ void ALMADefaultCharacter::ZoomIn()
 void ALMADefaultCharacter::ZoomOut()
 {
 	SpringArmComponent->TargetArmLength = ArmLength += 10;
-}
-
-void ALMADefaultCharacter::Sprint()
-{
-	SprintBool = SprintBool == false ? true : false;
-
-	// TODO//AActor* OwnerComponent = GetOwner();
-
-
 }
 
 void ALMADefaultCharacter::OnDeath()
