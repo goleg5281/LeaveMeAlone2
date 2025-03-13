@@ -10,6 +10,7 @@
 #include "Components/DecalComponent.h"
 #include "Components/LMAHealthComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/Engine.h"
 
 
 // Sets default values
@@ -51,7 +52,7 @@ void ALMADefaultCharacter::BeginPlay()
 	}
 	OnHealthChanged(HealthComponent->GetHealth());
 	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
-
+	HealthComponent->OnHealthChanged.AddUObject(this, &ALMADefaultCharacter::OnHealthChanged);
 }
 
 // Called every frame
@@ -66,7 +67,7 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 	SprintBool ? 
 		  Stamina -= 5.0f 
 		: Stamina >= 100 ? Stamina += 0.0f : Stamina += 0.5f;
-	UE_LOG(LogTemp, Display, TEXT("Stamina: %f"), Stamina);
+	//UE_LOG(LogTemp, Display, TEXT("Stamina: %f"), Stamina);
 }
 
 void ALMADefaultCharacter::RotationPlayerOnCursor()
@@ -130,7 +131,9 @@ void ALMADefaultCharacter::ZoomOut()
 void ALMADefaultCharacter::Sprint()
 {
 	SprintBool = SprintBool == false ? true : false;
-	//TODO//SetDefault();
+
+	// TODO//AActor* OwnerComponent = GetOwner();
+
 
 }
 

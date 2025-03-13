@@ -38,20 +38,34 @@ void ULMAHealthComponent::OnTakeAnyDamage(
 	}
 
 	Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
+	UE_LOG(LogTemp, Display, TEXT("Health: %f"), Health);//deleteLog
 	OnHealthChanged.Broadcast(Health);
 
 	if (IsDead())
 	{
 		OnDeath.Broadcast();
 	}
-} 
+}
 
 bool ULMAHealthComponent::IsDead() const
 {
 	return Health <= 0.0f;
 }
 
+bool ULMAHealthComponent::AddHealth(float NewHealth)
+{
+	if (IsDead() || IsHealthFull())
+		return false;
+	Health = FMath::Clamp(Health + NewHealth, 0.0f, MaxHealth);
+	UE_LOG(LogTemp, Display, TEXT("Health: %f"), Health); // deleteLog
+	OnHealthChanged.Broadcast(Health);
+	return true;
+}
 
+bool ULMAHealthComponent::IsHealthFull() const
+{
+	return FMath::IsNearlyEqual(Health, MaxHealth);
+}
 // Called every frame
 //void ULMAHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 //{

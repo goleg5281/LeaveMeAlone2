@@ -75,8 +75,9 @@ protected:
 	UAnimMontage* DeathMontage;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	bool SprintBool = false;
+
 	float Stamina = 100.0f;
 
 private:
@@ -85,4 +86,9 @@ private:
 
 private:
 	void RotationPlayerOnCursor();
+
+public:
+	UFUNCTION()
+	ULMAHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
 };

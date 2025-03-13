@@ -43,7 +43,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	float MaxHealth = 100.0f;
 
-	private:
+private:
 	UFUNCTION()
 	void OnTakeAnyDamage(
 		AActor* DamagedActor, float Damage,
@@ -51,7 +51,11 @@ protected:
 		class AController* InstigatedBy, AActor* DamageCauser
 	);
 	
-	public:
+public:
 	FOnDeath OnDeath;
 	FOnHealthChanged OnHealthChanged;
+
+public:
+	bool AddHealth(float NewHealth);
+	bool IsHealthFull() const;
 };
