@@ -49,6 +49,7 @@ void ALMADefaultCharacter::BeginPlay()
 	{
 		CurrentCursor = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), CursorMaterial, CursorSize, FVector(0));
 	}
+	OnHealthChanged(HealthComponent->GetHealth());
 	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
 
 }
@@ -57,7 +58,19 @@ void ALMADefaultCharacter::BeginPlay()
 void ALMADefaultCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!HealthComponent->IsDead())
+	{
+		RotationPlayerOnCursor();
+	}
 
+	SprintBool ? 
+		  Stamina -= 5.0f 
+		: Stamina >= 100 ? Stamina += 0.0f : Stamina += 0.5f;
+	UE_LOG(LogTemp, Display, TEXT("Stamina: %f"), Stamina);
+}
+
+void ALMADefaultCharacter::RotationPlayerOnCursor()
+{
 	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (PC)
 	{
@@ -69,14 +82,9 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 		{
 			CurrentCursor->SetWorldLocation(ResultHit.Location);
 		}
-
 	}
-
-	SprintBool ? 
-		  Stamina -= 5.0f 
-		: Stamina >= 100 ? Stamina += 0.0f : Stamina += 0.5f;
-	UE_LOG(LogTemp, Display, TEXT("Stamina: %f"), Stamina);
 }
+
 
 // Called to bind functionality to input
 void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -137,4 +145,9 @@ void ALMADefaultCharacter::OnDeath()
 	{
 		Controller->ChangeState(NAME_Spectating);
 	}
+}
+
+void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
 }

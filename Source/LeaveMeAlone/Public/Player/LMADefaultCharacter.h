@@ -81,4 +81,8 @@ protected:
 
 private:
 	void OnDeath();
+	void OnHealthChanged(float NewHealth);
+
+private:
+	void RotationPlayerOnCursor();
 };

@@ -17,4 +17,7 @@ class LEAVEMEALONE_API ALMAPlayerController : public APlayerController
 
 public:
 	virtual void BeginPlay() override;
+
+protected:
+	virtual void BeginSpectatingState() override;
 };
