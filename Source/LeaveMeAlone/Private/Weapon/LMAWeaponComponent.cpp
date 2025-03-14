@@ -51,3 +51,11 @@ void ULMAWeaponComponent::SpawnWeapon()
 	}
 }
 
+void ULMAWeaponComponent::Fire()
+{
+	if (Weapon)
+	{
+		Weapon->Fire();
+	}
+}
+

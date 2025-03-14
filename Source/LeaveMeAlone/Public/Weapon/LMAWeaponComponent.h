@@ -32,5 +32,9 @@ protected:
 	UPROPERTY()
 	ALMABaseWeapon* Weapon = nullptr;
 
+public:
 	void SpawnWeapon();
+
+	void Fire();
+
 };

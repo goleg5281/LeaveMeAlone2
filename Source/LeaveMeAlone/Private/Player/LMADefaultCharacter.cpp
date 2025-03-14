@@ -100,6 +100,8 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("ZoomOut", EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::ZoomOut);
 	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::ZoomGamePad);
 	PlayerInputComponent->BindAction("Sprint", EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::Sprint);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Fire);
+
 }
 
 void ALMADefaultCharacter::MoveForward(float Value)
@@ -112,17 +114,20 @@ void ALMADefaultCharacter::MoveRight(float Value)
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
+
+
+void ALMADefaultCharacter::Sprint()
+{
+	SprintBool = SprintBool == false ? true : false;
+
+	// TODO?????????????????????????????????HOW TO SET CurrentVelocity from here?????????    //AActor* OwnerComponent = GetOwner();
+}
+
 void ALMADefaultCharacter::ZoomGamePad(float Value)
 {
 	ArmLength += Value;
 	SpringArmComponent->TargetArmLength = ArmLength;
 	//UE_LOG(LogTemp, Display, TEXT("ArmLength: %f"), ArmLength);
-}
-void ALMADefaultCharacter::Sprint()
-{
-	SprintBool = SprintBool == false ? true : false;
-
-	// TODO?????????????????????????????????HOW TO SET CurrentVelocity//AActor* OwnerComponent = GetOwner();
 }
 
 void ALMADefaultCharacter::ZoomIn()
