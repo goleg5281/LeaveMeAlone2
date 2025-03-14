@@ -22,7 +22,7 @@ void ULMAWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	SpawnWeapon();
 	
 }
 
@@ -40,7 +40,7 @@ void ULMAWeaponComponent::SpawnWeapon()
 	Weapon = GetWorld()->SpawnActor<ALMABaseWeapon>(WeaponClass);
 	if (Weapon)
 	{
-		const ACharacter* Character = Cast<ACharacter>(GetOwner());
+		const auto Character = Cast<ACharacter>(GetOwner());
 		if (Character)
 		{
 			FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
