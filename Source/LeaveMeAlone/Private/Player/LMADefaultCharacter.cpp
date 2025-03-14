@@ -9,6 +9,7 @@
 #include "Components/InputComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/LMAHealthComponent.h"
+#include "Weapon/LMAWeaponComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Engine.h"
 
@@ -39,6 +40,7 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 
 
 	HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
+	WeaponComponent = CreateDefaultSubobject<ULMAWeaponComponent>("Weapon");
 }
 
 // Called when the game starts or when spawned

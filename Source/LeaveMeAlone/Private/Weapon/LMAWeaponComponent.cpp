@@ -2,6 +2,9 @@
 
 
 #include "Weapon/LMAWeaponComponent.h"
+#include "Weapon/LMABaseWeapon.h"
+#include "GameFramework/Character.h"
+#include "Player/LMADefaultCharacter.h"
 
 // Sets default values for this component's properties
 ULMAWeaponComponent::ULMAWeaponComponent()
@@ -30,5 +33,21 @@ void ULMAWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void ULMAWeaponComponent::SpawnWeapon()
+{
+	Weapon = GetWorld()->SpawnActor<ALMABaseWeapon>(WeaponClass);
+	if (Weapon)
+	{
+		const ACharacter* Character = Cast<ACharacter>(GetOwner());
+		if (Character)
+		{
+			FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+			Weapon->AttachToComponent(Character->GetMesh(), AttachmentRules, "r_Weapon_Socket");
+
+		}
+
+	}
 }
 

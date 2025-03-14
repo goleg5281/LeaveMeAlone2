@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "LMAWeaponComponent.generated.h"
 
+class ALMABaseWeapon;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LEAVEMEALONE_API ULMAWeaponComponent : public UActorComponent
@@ -24,5 +25,12 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	TSubclassOf<ALMABaseWeapon> WeaponClass;
+
+	UPROPERTY()
+	ALMABaseWeapon* Weapon = nullptr;
+
+	void SpawnWeapon();
 };
