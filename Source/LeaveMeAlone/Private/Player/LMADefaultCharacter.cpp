@@ -116,7 +116,6 @@ void ALMADefaultCharacter::MoveRight(float Value)
 }
 
 
-
 void ALMADefaultCharacter::Sprint()
 {
 	SprintBool = SprintBool == false ? true : false;

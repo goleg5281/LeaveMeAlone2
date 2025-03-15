@@ -41,12 +41,11 @@ void ULMAWeaponComponent::SpawnWeapon()
 	Weapon = GetWorld()->SpawnActor<ALMABaseWeapon>(WeaponClass);
 	if (Weapon)
 	{
-		const auto Character = Cast<ACharacter>(GetOwner());
+		const ACharacter* Character = Cast<ACharacter>(GetOwner());
 		if (Character)
 		{
 			FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
 			Weapon->AttachToComponent(Character->GetMesh(), AttachmentRules, "r_Weapon_Socket");
-
 		}
 
 	}
@@ -54,7 +53,6 @@ void ULMAWeaponComponent::SpawnWeapon()
 
 void ULMAWeaponComponent::Fire()
 {
-	UE_LOG(LogWeapon, Display, TEXT("Fire() AnimReloading=%i"), AnimReloading);																	//check
 	if (Weapon && !AnimReloading)
 	{
 		Weapon->Fire();
@@ -63,22 +61,19 @@ void ULMAWeaponComponent::Fire()
 
 void ULMAWeaponComponent::InitAnimNotify()
 {
-	UE_LOG(LogWeapon, Display, TEXT("InitAnimNotify"));
 	if (!ReloadMontage)
 	{
-		UE_LOG(LogWeapon, Display, TEXT("InitAnimNotify return"));																//check!!!!!!!!!!!
 		return;
 	}
-
 
 	const auto NotifiesEvents = ReloadMontage->Notifies;
 	for (auto NotifyEvent : NotifiesEvents)
 	{
-		auto ReloadFinish = Cast<ULMAReloadFinishedAnimNotify>(NotifyEvent.Notify);//ULMAReloadFinishedAnimNotify*
+		ULMAReloadFinishedAnimNotify* ReloadFinish = Cast<ULMAReloadFinishedAnimNotify>(NotifyEvent.Notify);
 		if (ReloadFinish)
 		{
 			ReloadFinish->OnNotifyReloadFinished.AddUObject(this, &ULMAWeaponComponent::OnNotifyReloadFinished);
-			UE_LOG(LogWeapon, Display, TEXT("InitAnimNotify AddUObject() done"));												//check
+			UE_LOG(LogWeapon, Display, TEXT("InitAnimNotify AddUObject() done"));
 			break;
 		}
 	}
@@ -86,12 +81,10 @@ void ULMAWeaponComponent::InitAnimNotify()
 
 void ULMAWeaponComponent::OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh)
 {
-	UE_LOG(LogWeapon, Display, TEXT("OnNotifyReloadFinished"));
-	const auto Character = Cast<ACharacter>(GetOwner());
+	const ACharacter* Character = Cast<ACharacter>(GetOwner());
 	if (Character->GetMesh() == SkeletalMesh)
 	{
 		AnimReloading = false;
-		UE_LOG(LogWeapon, Display, TEXT("AnimReloading = false"));																//check
 	}
 }
 
@@ -104,18 +97,13 @@ void ULMAWeaponComponent::Reload()
 {
 	if (!CanReload())
 	{
-		UE_LOG(LogWeapon, Display, TEXT("Can't Reload"));
 		return;
 	}
-		
 
 	Weapon->ChangeClip();
 	AnimReloading = true;
-	UE_LOG(LogWeapon, Display, TEXT("AnimReloading = true"));
 	auto Character = Cast<ACharacter>(GetOwner());
-	UE_LOG(LogWeapon, Display, TEXT("Cast<ACharacter>"));
 	Character->PlayAnimMontage(ReloadMontage);
-	UE_LOG(LogWeapon, Display, TEXT("PlayAnimMontage"));																			//check
 }
 
 
