@@ -66,5 +66,5 @@ public:
 private:
 	FTimerHandle FireTimerHandle;
 	void OnTimeToFire();
-	float FireTimerRate = 0.45f;
+	float FireTimerRate = 1.0f;
 };

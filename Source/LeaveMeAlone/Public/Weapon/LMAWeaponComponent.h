@@ -37,7 +37,7 @@ public:
 	void SpawnWeapon();
 
 	void Fire();
-
+	void FireReleased();
 	void Reload();
 	bool CanReload() const;
 

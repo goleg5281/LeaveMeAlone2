@@ -59,6 +59,14 @@ void ULMAWeaponComponent::Fire()
 	}
 }
 
+void ULMAWeaponComponent::FireReleased()
+{
+	if (Weapon)
+	{
+		Weapon->FireReleased();
+	}
+}
+
 void ULMAWeaponComponent::InitAnimNotify()
 {
 	if (!ReloadMontage)

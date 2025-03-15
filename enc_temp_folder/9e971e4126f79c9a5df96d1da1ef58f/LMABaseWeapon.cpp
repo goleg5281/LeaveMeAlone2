@@ -32,12 +32,15 @@ void ALMABaseWeapon::Tick(float DeltaTime)
 
 void ALMABaseWeapon::Fire()
 {
-	GetWorldTimerManager().SetTimer(FireTimerHandle, this, &ALMABaseWeapon::OnTimeToFire, FireTimerRate, true);//switch on FireTimerHandle
+	//switch on FireTimerHandle
+	GetWorldTimerManager().SetTimer(FireTimerHandle, this, &ALMABaseWeapon::OnTimeToFire, FireTimerRate, true);
 }
 
 void ALMABaseWeapon::FireReleased()
 {
+	//auto Time = GetWorld()->GetTimeSeconds();
 	GetWorldTimerManager().ClearTimer(FireTimerHandle);
+
 }
 
 void ALMABaseWeapon::OnTimeToFire()
