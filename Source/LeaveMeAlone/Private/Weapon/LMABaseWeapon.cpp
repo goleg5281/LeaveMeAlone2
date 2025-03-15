@@ -48,7 +48,7 @@ void ALMABaseWeapon::Shoot()
 	{
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 5.0f, 24, FColor::Red, false, 1.0f);
 	}
-
+	DecrementBullets();
 }
 
 void ALMABaseWeapon::ChangeClip()
