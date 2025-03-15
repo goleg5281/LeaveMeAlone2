@@ -6,7 +6,21 @@
 #include "GameFramework/Actor.h"
 #include "LMABaseWeapon.generated.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogWeapon, All, All);
+
 class USkeletalMeshComponent;
+
+USTRUCT(BlueprintType)
+struct FAmmoWeapon
+{
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	int32 Bullets;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	int32 Clips;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	bool Infinite;
+};
 
 UCLASS()
 class LEAVEMEALONE_API ALMABaseWeapon : public AActor
@@ -31,10 +45,19 @@ protected:
 
 public:
 	void Fire();
-	
 	void Shoot();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	float TraceDistance = 800.0f;
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	FAmmoWeapon AmmoWeapon{30, 0, true};
+
+	FAmmoWeapon CurrentAmmoWeapon;
+
+	void DecrementBullets();
+	bool IsCurrentClipEmpty() const;
+	void ChangeClip();
 };

@@ -10,6 +10,8 @@ ALMABaseWeapon::ALMABaseWeapon()
 	PrimaryActorTick.bCanEverTick = true;
 	WeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	SetRootComponent(WeaponComponent);
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -47,5 +49,25 @@ void ALMABaseWeapon::Shoot()
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 5.0f, 24, FColor::Red, false, 1.0f);
 	}
 
+}
+
+void ALMABaseWeapon::ChangeClip()
+{
+	CurrentAmmoWeapon.Bullets = AmmoWeapon.Bullets;
+}
+
+bool ALMABaseWeapon::IsCurrentClipEmpty() const
+{
+	return CurrentAmmoWeapon.Bullets == 0;
+}
+
+void ALMABaseWeapon::DecrementBullets()
+{
+	CurrentAmmoWeapon.Bullets--;
+	UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
+	if (IsCurrentClipEmpty())
+	{
+		ChangeClip();
+	}
 }
 
