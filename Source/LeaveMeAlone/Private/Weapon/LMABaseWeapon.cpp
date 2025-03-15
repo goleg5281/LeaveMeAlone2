@@ -18,7 +18,7 @@ ALMABaseWeapon::ALMABaseWeapon()
 void ALMABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	ChangeClip();
 }
 
 // Called every frame

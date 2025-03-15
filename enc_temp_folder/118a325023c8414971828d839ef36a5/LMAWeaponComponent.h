@@ -7,7 +7,6 @@
 #include "LMAWeaponComponent.generated.h"
 
 class ALMABaseWeapon;
-class UAnimMontage;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LEAVEMEALONE_API ULMAWeaponComponent : public UActorComponent

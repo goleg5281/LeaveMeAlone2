@@ -66,7 +66,7 @@ void ULMAWeaponComponent::InitAnimNotify()
 	UE_LOG(LogWeapon, Display, TEXT("InitAnimNotify"));
 	if (!ReloadMontage)
 	{
-		UE_LOG(LogWeapon, Display, TEXT("InitAnimNotify return"));																//check!!!!!!!!!!!
+		UE_LOG(LogWeapon, Display, TEXT("InitAnimNotify return"));																//check
 		return;
 	}
 
