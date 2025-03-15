@@ -11,8 +11,6 @@ ALMABaseWeapon::ALMABaseWeapon()
 	PrimaryActorTick.bCanEverTick = true;
 	WeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	SetRootComponent(WeaponComponent);
-
-	
 }
 
 // Called when the game starts or when spawned
@@ -32,21 +30,29 @@ void ALMABaseWeapon::Tick(float DeltaTime)
 
 void ALMABaseWeapon::Fire()
 {
-	GetWorldTimerManager().SetTimer(FireTimerHandle, this, &ALMABaseWeapon::OnTimeToFire, FireTimerRate, true);//switch on FireTimerHandle
+	Shoot();
+	GetWorldTimerManager().SetTimer(FireTimerHandle, this, &ALMABaseWeapon::OnTimeToFire, FireTimerRate, true); // switch on FireTimerHandle
 }
 
 void ALMABaseWeapon::FireReleased()
 {
-	GetWorldTimerManager().ClearTimer(FireTimerHandle);
+	if (FireTimerHandle.IsValid())
+	{
+		GetWorldTimerManager().ClearTimer(FireTimerHandle);
+	}	
 }
 
 void ALMABaseWeapon::OnTimeToFire()
 {
-	Shoot();
+		Shoot();
 }
 
 void ALMABaseWeapon::Shoot()
 {
+	if (CurrentAmmoWeapon.Bullets <= 0)
+	{
+		return;
+	}
 	const FTransform SocketTransform = WeaponComponent->GetSocketTransform("Muzzle");
 	const FVector TraceStart = SocketTransform.GetLocation();
 	const FVector ShootDirection = SocketTransform.GetRotation().GetForwardVector();
@@ -68,6 +74,11 @@ void ALMABaseWeapon::ChangeClip()
 	CurrentAmmoWeapon.Bullets = AmmoWeapon.Bullets;
 }
 
+bool ALMABaseWeapon::IsCurrentClipFull() const
+{
+	return CurrentAmmoWeapon.Bullets == AmmoWeapon.Bullets;
+}
+
 bool ALMABaseWeapon::IsCurrentClipEmpty() const
 {
 	return CurrentAmmoWeapon.Bullets == 0;
@@ -79,7 +90,8 @@ void ALMABaseWeapon::DecrementBullets()
 	UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
 	if (IsCurrentClipEmpty())
 	{
-		ChangeClip();
+		EmptyAmmo.Broadcast(); //ChangeClip();
 	}
 }
+
 

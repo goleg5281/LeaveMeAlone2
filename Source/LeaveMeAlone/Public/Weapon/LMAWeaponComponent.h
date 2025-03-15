@@ -9,6 +9,8 @@
 class ALMABaseWeapon;
 class UAnimMontage;
 
+// DECLARE_MULTICAST_DELEGATE();
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LEAVEMEALONE_API ULMAWeaponComponent : public UActorComponent
 {
@@ -40,6 +42,7 @@ public:
 	void FireReleased();
 	void Reload();
 	bool CanReload() const;
+	void StartReloading(); // переместить в BaseWeapon
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
@@ -47,7 +50,12 @@ protected:
 
 	bool AnimReloading = false;
 
+	bool IsCurrentClipFull() const;
+
 public:
 	void InitAnimNotify();
 	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
+
+public:
+	void EmptyAmmo();
 };

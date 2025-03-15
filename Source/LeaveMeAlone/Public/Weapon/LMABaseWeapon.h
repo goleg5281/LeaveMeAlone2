@@ -7,6 +7,7 @@
 #include "LMABaseWeapon.generated.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogWeapon, All, All);
+DECLARE_MULTICAST_DELEGATE(FEmptyAmmo);
 
 class USkeletalMeshComponent;
 
@@ -48,7 +49,6 @@ public:
 	void Shoot();
 	void FireReleased();
 
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	float TraceDistance = 800.0f;
@@ -62,9 +62,13 @@ public:
 	void DecrementBullets();
 	bool IsCurrentClipEmpty() const;
 	void ChangeClip();
+	bool IsCurrentClipFull() const;
 
 private:
 	FTimerHandle FireTimerHandle;
 	void OnTimeToFire();
 	float FireTimerRate = 0.45f;
+
+public:
+	FEmptyAmmo EmptyAmmo;
 };
