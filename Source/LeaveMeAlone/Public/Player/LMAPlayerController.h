@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class LEAVEMEALONE_API ALMAPlayerController : public APlayerController
 {
 	GENERATED_BODY()
@@ -20,4 +20,16 @@ public:
 
 protected:
 	virtual void BeginSpectatingState() override;
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	bool Sprint = false;
+
+	float Stamina = 100.0f;
+
+	UFUNCTION(BlueprintCallable)
+	bool CanSprint() const
+	{ 
+		return Sprint;
+	}
 };
