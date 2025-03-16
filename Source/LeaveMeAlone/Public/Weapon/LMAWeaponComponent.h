@@ -8,6 +8,7 @@
 
 class ALMABaseWeapon;
 class UAnimMontage;
+struct FAmmoWeapon;
 
 // DECLARE_MULTICAST_DELEGATE();
 
@@ -58,4 +59,7 @@ public:
 
 public:
 	void EmptyAmmo();
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const;
 };
