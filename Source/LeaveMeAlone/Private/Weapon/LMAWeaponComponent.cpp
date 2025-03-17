@@ -124,11 +124,13 @@ void ULMAWeaponComponent::StartReloading()
 	Character->PlayAnimMontage(ReloadMontage);
 }
 
+UFUNCTION(BlueprintCallable)
 void ULMAWeaponComponent::SwitchFireOff()
 {
 	AnimReloading = true;
 }
 
+UFUNCTION(BlueprintCallable)
 void ULMAWeaponComponent::SwitchFireOn()
 {
 	AnimReloading = false;
