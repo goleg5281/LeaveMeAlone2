@@ -121,31 +121,25 @@ void ALMADefaultCharacter::MoveRight(float Value)
 void ALMADefaultCharacter::Sprint()
 {
 	SprintBool = SprintBool == false ? true : false;
-	
-	if (WeaponComponent && SprintBool)
-	{
-		WeaponComponent->FireReleased();
-		WeaponComponent->SwitchFireOff();
-	}
-	if (WeaponComponent && !SprintBool)
-	{
-		WeaponComponent->FireReleased();
-		WeaponComponent->SwitchFireOn();
-	}
+
 	//AActor* OwnerComponent = GetOwner();
 }
 
 void ALMADefaultCharacter::SprintTick()
 {
+	
+	
+
 	if (SprintBool)
 	{
+		if (WeaponComponent)
+		{
+			WeaponComponent->SwitchFireOff();
+		}
+
 		if (Stamina <= 0)
 		{
 			SprintBool = false;
-			if (WeaponComponent && !SprintBool)
-			{
-				WeaponComponent->SwitchFireOn();
-			}
 		}
 		else
 		{
@@ -154,6 +148,10 @@ void ALMADefaultCharacter::SprintTick()
 	}
 	else
 	{
+		if (WeaponComponent)
+		{
+			WeaponComponent->SwitchFireOn();
+		}
 		Stamina >= 100 ? Stamina += 0.0f : Stamina += 0.05f;
 	}
 	// UE_LOG(LogTemp, Display, TEXT("Stamina: %f"), Stamina);

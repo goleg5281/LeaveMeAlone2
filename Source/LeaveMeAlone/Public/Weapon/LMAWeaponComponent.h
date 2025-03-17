@@ -8,6 +8,7 @@
 
 class ALMABaseWeapon;
 class UAnimMontage;
+struct FAmmoWeapon;
 
 // DECLARE_MULTICAST_DELEGATE();
 
@@ -43,6 +44,8 @@ public:
 	void Reload();
 	bool CanReload() const;
 	void StartReloading(); // переместить в BaseWeapon
+	void SwitchFireOn();
+	void SwitchFireOff();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
@@ -58,4 +61,7 @@ public:
 
 public:
 	void EmptyAmmo();
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const;
 };
