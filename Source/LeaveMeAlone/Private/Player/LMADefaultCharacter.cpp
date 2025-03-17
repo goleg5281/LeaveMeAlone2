@@ -104,7 +104,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Fire);
 	PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &ULMAWeaponComponent::FireReleased);
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Reload);
-
+	PlayerInputComponent->BindAction("Pause", EInputEvent::IE_Pressed, this, &ALMADefaultCharacter::Pause);
 }
 
 void ALMADefaultCharacter::MoveForward(float Value)
@@ -159,7 +159,6 @@ void ALMADefaultCharacter::SprintTick()
 	// UE_LOG(LogTemp, Display, TEXT("Stamina: %f"), Stamina);
 }
 
-
 void ALMADefaultCharacter::ZoomGamePad(float Value)
 {
 	ArmLength += Value;
@@ -193,4 +192,18 @@ void ALMADefaultCharacter::OnDeath()
 void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
+}
+
+void ALMADefaultCharacter::Pause()
+{
+	/* if (WeaponComponent && WeaponComponent->AnimReloading)
+	{
+		WeaponComponent->SwitchFireOn();
+		UE_LOG(LogTemp, Display, TEXT("PAUSE SwitchFireOn"));
+	}
+	if (WeaponComponent && !WeaponComponent->AnimReloading)
+	{
+		WeaponComponent->SwitchFireOff();
+		UE_LOG(LogTemp, Display, TEXT("PAUSE SwitchFireOff"));
+	}*/
 }

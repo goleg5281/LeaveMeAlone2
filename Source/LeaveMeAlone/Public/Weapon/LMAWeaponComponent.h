@@ -47,11 +47,13 @@ public:
 	void SwitchFireOn();
 	void SwitchFireOff();
 
+public:
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+	bool AnimReloading = false;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	UAnimMontage* ReloadMontage;
-
-	bool AnimReloading = false;
 
 	bool IsCurrentClipFull() const;
 
