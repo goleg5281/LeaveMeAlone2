@@ -54,6 +54,7 @@ public:
 	void ZoomGamePad(float Value);
 	void Sprint();
 	void SprintTick();
+	void Pause();
 
 public:
 	UPROPERTY()
