@@ -53,6 +53,7 @@ public:
 	void ZoomOut();
 	void ZoomGamePad(float Value);
 	void Sprint();
+	void SprintTick();
 
 public:
 	UPROPERTY()

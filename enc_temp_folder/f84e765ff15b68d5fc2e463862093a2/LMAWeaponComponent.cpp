@@ -124,12 +124,12 @@ void ULMAWeaponComponent::StartReloading()
 	Character->PlayAnimMontage(ReloadMontage);
 }
 
-void ULMAWeaponComponent::SwitchFireOff()
+void ULMAWeaponComponent::SwitchFireOn()
 {
 	AnimReloading = true;
 }
 
-void ULMAWeaponComponent::SwitchFireOn()
+void ULMAWeaponComponent::SwitchFireOff()
 {
 	AnimReloading = false;
 }

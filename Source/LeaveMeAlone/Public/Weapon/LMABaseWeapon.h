@@ -63,6 +63,7 @@ public:
 	bool IsCurrentClipEmpty() const;
 	void ChangeClip();
 	bool IsCurrentClipFull() const;
+	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
 
 private:
 	FTimerHandle FireTimerHandle;

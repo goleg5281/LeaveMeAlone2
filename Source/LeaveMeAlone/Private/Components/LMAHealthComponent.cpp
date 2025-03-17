@@ -57,7 +57,6 @@ bool ULMAHealthComponent::AddHealth(float NewHealth)
 	if (IsDead() || IsHealthFull())
 		return false;
 	Health = FMath::Clamp(Health + NewHealth, 0.0f, MaxHealth);
-	UE_LOG(LogTemp, Display, TEXT("Health: %f"), Health); // deleteLog
 	OnHealthChanged.Broadcast(Health);
 	return true;
 }
