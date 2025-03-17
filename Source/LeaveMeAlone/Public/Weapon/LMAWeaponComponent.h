@@ -44,6 +44,8 @@ public:
 	void Reload();
 	bool CanReload() const;
 	void StartReloading(); // переместить в BaseWeapon
+	void SwitchFireOn();
+	void SwitchFireOff();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
