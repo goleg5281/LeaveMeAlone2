@@ -3,6 +3,7 @@
 
 #include "Weapon/LMABaseWeapon.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ALMABaseWeapon::ALMABaseWeapon()
@@ -58,6 +59,7 @@ void ALMABaseWeapon::Shoot()
 	const FVector ShootDirection = SocketTransform.GetRotation().GetForwardVector();
 	const FVector TraceEnd = TraceStart + ShootDirection * TraceDistance;
 	DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Black, false, 1.0f, 0, 2.0f);
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ShootWave, TraceStart);
 
 	FHitResult HitResult;
 	GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility);

@@ -10,6 +10,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogWeapon, All, All);
 DECLARE_MULTICAST_DELEGATE(FEmptyAmmo);
 
 class USkeletalMeshComponent;
+class USoundWave;
 
 USTRUCT(BlueprintType)
 struct FAmmoWeapon
@@ -72,4 +73,6 @@ private:
 
 public:
 	FEmptyAmmo EmptyAmmo;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	USoundWave* ShootWave;
 };
