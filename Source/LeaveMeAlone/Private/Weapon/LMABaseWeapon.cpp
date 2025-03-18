@@ -4,6 +4,8 @@
 #include "Weapon/LMABaseWeapon.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 
 // Sets default values
 ALMABaseWeapon::ALMABaseWeapon()
@@ -48,7 +50,7 @@ void ALMABaseWeapon::OnTimeToFire()
 		Shoot();
 }
 
-void ALMABaseWeapon::Shoot()
+/*void ALMABaseWeapon::Shoot()
 {
 	if (CurrentAmmoWeapon.Bullets <= 0)
 	{
@@ -68,6 +70,24 @@ void ALMABaseWeapon::Shoot()
 	{
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 5.0f, 24, FColor::Red, false, 1.0f);
 	}
+	DecrementBullets();
+}*/ 
+
+void ALMABaseWeapon::Shoot()
+{
+	const FTransform SocketTransform = WeaponComponent->GetSocketTransform("Muzzle");
+	const FVector TraceStart = SocketTransform.GetLocation();
+	const FVector ShootDirection = SocketTransform.GetRotation().GetForwardVector();
+	const FVector TraceEnd = TraceStart + ShootDirection * TraceDistance;
+	FHitResult HitResult;
+	GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility);
+	FVector TracerEnd = TraceEnd;
+	if (HitResult.bBlockingHit)
+	{
+		TracerEnd = HitResult.ImpactPoint;
+	}
+	SpawnTrace(TraceStart, TracerEnd);
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ShootWave, TraceStart);
 	DecrementBullets();
 }
 
@@ -95,5 +115,15 @@ void ALMABaseWeapon::DecrementBullets()
 		EmptyAmmo.Broadcast(); //ChangeClip();
 	}
 }
+
+void ALMABaseWeapon::SpawnTrace(const FVector& TraceStart, const FVector& TraceEnd)
+{
+	const auto TraceFX = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), TraceEffect, TraceStart);
+	if (TraceFX)
+	{
+		TraceFX->SetNiagaraVariableVec3(TraceName, TraceEnd);
+	}
+}
+
 
 
